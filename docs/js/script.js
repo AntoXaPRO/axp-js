@@ -35,6 +35,7 @@ new Vue({
 
             if(this.model.isValid()){
                 result.data = this.model.obj
+                this.model = new TestModel()
             }else{
                 result.status = 401
                 result.message = 'Bad Request'
@@ -42,7 +43,6 @@ new Vue({
             }
 
             this.showJSON(result)
-            //this.model = new TestModel()
         }
     }
 })
