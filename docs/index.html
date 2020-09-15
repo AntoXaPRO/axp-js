@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link href="vendor/json-viewer.css" rel="stylesheet" />
+    <title>AXP-JS</title>
+</head>
+<body>
+    <div id="app">
+        <v-app>
+            <header>
+                <v-container>
+                    <h1>AXP Js - helper library</h1>
+                    <hr>
+                </v-container>
+            </header>
+            <v-main>
+                <v-container>
+                    <h3>class DataResultEntity</h3>
+                    <blockquote>
+                        import { DataResultEntity } from 'axp-js/src/entities'
+                        <br />
+                        const { DataResultEntity } = axpJs.entities
+                    </blockquote>
+                </v-container>
+                <v-container>
+                    <h3>Data model returned by the server:</h3>
+                    <!-- <code>{{ result }}</code> -->
+                    <div id="json"></div>
+                </v-container>
+                <v-container>
+                    <v-card>
+                        <v-card-title>Editor entity</v-card-title>
+                        <v-card-text>
+                            <v-form @submit.prevent="submit">
+                                <v-text-field 
+                                    label="Name" 
+                                    v-model="model.obj.name"
+                                    :error-messages="model._errors.name"
+                                    @focus="model._errors.name = undefined">
+                                </v-text-field>
+                                <v-text-field
+                                    label="Email"
+                                    v-model="model.obj.email"
+                                    :error-messages="model._errors.email"
+                                    @focus="model._errors.email = undefined">
+                                </v-text-field>
+                                <v-text-field
+                                    label="Age"
+                                    v-model="model.obj.age"
+                                    :error-messages="model._errors.age"
+                                    @focus="model._errors.age = undefined">
+                                </v-text-field>
+                                <v-text-field
+                                    label="Website"
+                                    v-model="model.obj.website"
+                                    :error-messages="model._errors.website"
+                                    @focus="model._errors.website = undefined">
+                                </v-text-field>
+                                <v-textarea
+                                    label="Description"
+                                    v-model="model.obj.description">
+                                </v-textarea>
+                                <v-btn type="submit" color="primary">Send</v-btn>
+                            </v-form>
+                        </v-card-text>
+                    </v-card>
+                </v-container>
+            </v-main>
+        </v-app>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="vendor/json-viewer.js"></script>
+    <script src="js/axp-js.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
