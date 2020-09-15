@@ -36,7 +36,6 @@ new Vue({
             if(this.model.isValid()){
                 result.data = this.model.obj
             }else{
-                console.log(this.model)
                 result.status = 401
                 result.message = 'Bad Request'
                 result.errors = this.model.errors
