@@ -48,4 +48,8 @@ export default class _BaseValidEntity {
             })
         })
     }
+
+    convertPreSave(){
+        return this.obj
+    }
 }
