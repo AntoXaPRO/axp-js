@@ -1,10 +1,10 @@
 import { DataResultCollectionEntity, DataResultEntity } from '../entities'
 
 export default class _BaseMongooseService {
-    constructor(model, { fields, populate, sort }, formModel){
+    constructor(model, { select, populate, sort }, formModel){
         this._model = model,
         this._options = {
-            fields: fields || [],
+            select: select || [],
             populate: populate || [],
             sort: sort || { dateCreate: 'desc' }
         }
@@ -106,7 +106,7 @@ export default class _BaseMongooseService {
     find (filter = {}, options = {}, callback) {
 
         const query = this._model.find(filter)
-        .select(options.filter || this._options.fields)
+        .select(options.select || this._options.select)
         .populate(options.populate || this._options.populate)
         .sort(options.sort || this._options.sort)
 
@@ -129,14 +129,14 @@ export default class _BaseMongooseService {
 
     findById (id, options = {}, callback) {
         const query = this._model.findById(id)
-        .select(options.filter || this._options.fields)
+        .select(options.select || this._options.select)
         .populate(options.populate || this._options.populate)
         return this._returnData(query, callback)
     }
 
     findOne (filter, options = {}, callback) {
         const query = this._model.findOne(filter)
-        .select(options.filter || this._options.fields)
+        .select(options.select || this._options.select)
         .populate(options.populate || this._options.populate)
         return this._returnData(query, callback)
     }
