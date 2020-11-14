@@ -36,7 +36,7 @@ export default class _BaseValidEntity {
         this._errors = {}
         try{
             const obj = this._schema.validateSync(this.obj, { abortEarly: false })
-            this.obj = { ...this.obj, ...this._schema.cast(obj) }
+            this.obj = this._schema.cast(obj)
             return true
         }catch(ex){
             this._setErrors(ex)
@@ -51,7 +51,7 @@ export default class _BaseValidEntity {
         this._errors = {}
         return new Promise((resolve, reject) => {
             this._schema.validate(this.obj, { abortEarly: false }).then(obj => {
-                this.obj = { ...this.obj, ...this._schema.cast(obj) }
+                this.obj = this._schema.cast(obj)
                 resolve(this.obj)
             }).catch(ex => {
                 reject(this._setErrors(ex))
@@ -76,7 +76,7 @@ export default class _BaseValidEntity {
      * Предназначен в основном для переопределения, чтобы изменить объект перед сохранением.
      * @param {*} obj 
      */
-    convertPreSave(){
-        return this.obj
+    convertPreSave(obj = this.obj){
+        return this.convertByFields(obj)
     }
 }

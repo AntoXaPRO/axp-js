@@ -4,7 +4,7 @@ const { DataResultEntity, _BaseValidEntity } = axpJs.entities
 class TestModel extends _BaseValidEntity {
     constructor(obj = {}){
         super(obj, {
-            name: Yup.string().required(),
+            name: Yup.string().lowercase().required(),
             email: Yup.string().required().email(),
             age: Yup.number().required().positive().integer(),
             website: Yup.string().required().url()
@@ -19,13 +19,13 @@ new Vue({
     vuetify: new Vuetify(),
     data: () => ({
         jsonViewer,
-        model: new TestModel({ 
+        model: new TestModel(/* { 
             name: 'AntoXa',
-            email: 'info@antoxa.pro',
+            email: 'infoantoxa.pro',
             age: 34,
             website: 'https://vuetifyjs.com/en/components/date-pickers/#formatting-with-external-libraries',
             description: 'Тестовае описание.'
-        })
+        } */)
     }),
     mounted() {
         this.showJSON(new DataResultEntity())
