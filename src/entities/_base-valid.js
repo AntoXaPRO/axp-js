@@ -2,9 +2,9 @@ import { object } from 'yup'
 
 export default class _BaseValidEntity {
     constructor(obj = {}, schema = {}){
-        this._schema = object().shape(schema)
         this._errors = {}
-        this.obj = obj
+        this._schema = object().shape(schema)
+        this.obj = this.convertPreSave(obj, true)
     }
 
     get errors () {
@@ -26,10 +26,7 @@ export default class _BaseValidEntity {
         this._errors = {}
         try{
             const obj = this._schema.validateSync(this.obj, { abortEarly: false })
-            this.obj = {
-                ...this.obj,
-                ...this._schema.cast(obj)
-            }
+            this.obj = { ...this.obj, ...this._schema.cast(obj) }
             return true
         }catch(ex){
             this._setErrors(ex)
@@ -49,7 +46,15 @@ export default class _BaseValidEntity {
         })
     }
 
-    convertPreSave(){
-        return this.obj
+    convertPreSave(obj = this.obj, strong = false){
+        if(strong){
+            let result = {}
+            for(let key in this._schema.fields){
+                result[key] = obj[key]
+            }
+            return result
+        }else{
+            return obj
+        }
     }
 }

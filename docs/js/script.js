@@ -7,7 +7,7 @@ class TestModel extends _BaseValidEntity {
             name: Yup.string().required(),
             email: Yup.string().required().email(),
             age: Yup.number().required().positive().integer(),
-            website: Yup.string().required().url(),
+            website: Yup.string().required().url()
         })
     }
 }
@@ -19,7 +19,13 @@ new Vue({
     vuetify: new Vuetify(),
     data: () => ({
         jsonViewer,
-        model: new TestModel()
+        model: new TestModel({ 
+            name: 'AntoXa',
+            email: 'info@antoxa.pro',
+            age: 34,
+            website: 'https://vuetifyjs.com/en/components/date-pickers/#formatting-with-external-libraries',
+            description: 'Тестовае описание.'
+        })
     }),
     mounted() {
         this.showJSON(new DataResultEntity())
@@ -31,10 +37,13 @@ new Vue({
             this.jsonViewer.showJSON(JSON.parse(dataResult), null, 2)
         },
         submit() {
+            console.log(this.model.obj)
             const result = new DataResultEntity(this.model.obj)
 
             if(this.model.isValid()){
+
                 result.data = this.model.obj
+
                 this.model = new TestModel()
             }else{
                 result.status = 401

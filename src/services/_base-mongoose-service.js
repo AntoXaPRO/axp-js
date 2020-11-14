@@ -83,11 +83,6 @@ export default class _BaseMongooseService {
      */
     update(obj, callback){
 
-        // Обновляем даты.
-        const newDate = Date.now()
-        obj.dateCreate = obj.dateCreate ? obj.dateCreate : newDate
-        obj.dateUpdate = newDate
-
         // Валидация данных.
         const validResult = this._validFormModel(obj)
 
