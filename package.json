@@ -1,6 +1,6 @@
 {
   "name": "axp-js",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "",
   "main": "dist/main.js",
   "module": "src/index.js",

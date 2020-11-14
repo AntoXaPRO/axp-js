@@ -4,9 +4,12 @@ export default class _BaseValidEntity {
     constructor(obj = {}, schema = {}){
         this._errors = {}
         this._schema = object().shape(schema)
-        this.obj = this.convertPreSave(obj, true)
+        this.obj = this.convertByFields(obj)
     }
 
+    /**
+     * Возвращает массив ошибок.
+     */
     get errors () {
         let arr = []
         for(let key in this._errors){
@@ -17,11 +20,18 @@ export default class _BaseValidEntity {
         return arr
     }
 
+    /**
+     * ПРиватный метод - добавляет ошибки в поле this._errors
+     * @param { Error } ex - Обект ошибки. 
+     */
     _setErrors(ex){
         ex.inner.forEach(e => this._errors[e.path] = e.message)
         return { message: ex.message, errors: this.errors }
     }
 
+    /**
+     * Валидация по схеме - возвращает true или false
+     */
     isValid(){
         this._errors = {}
         try{
@@ -34,6 +44,9 @@ export default class _BaseValidEntity {
         }
     }
 
+    /**
+     * Валидация по схеме - возвращает промис.
+     */
     validate(){
         this._errors = {}
         return new Promise((resolve, reject) => {
@@ -46,15 +59,24 @@ export default class _BaseValidEntity {
         })
     }
 
-    convertPreSave(obj = this.obj, strong = false){
-        if(strong){
-            let result = {}
-            for(let key in this._schema.fields){
-                result[key] = obj[key]
-            }
-            return result
-        }else{
-            return obj
+    /**
+     * Возвращает объект сформированный из полей схемы.
+     * @param { Object } obj - Объект для конвертации. 
+     */
+    convertByFields(obj = this.obj){
+        let result = {}
+        for(let key in this._schema.fields){
+            result[key] = obj[key]
         }
+        return result
+    }
+
+    /**
+     * Метод вызываемый перед сохранением в БД и возврощает объект который в итоге должен попасть в БД. 
+     * Предназначен в основном для переопределения, чтобы изменить объект перед сохранением.
+     * @param {*} obj 
+     */
+    convertPreSave(){
+        return this.obj
     }
 }
