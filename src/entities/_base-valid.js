@@ -76,7 +76,7 @@ export default class _BaseValidEntity {
      * Предназначен в основном для переопределения, чтобы изменить объект перед сохранением.
      * @param {*} obj 
      */
-    convertPreSave(obj = this.obj){
-        return this.convertByFields(obj)
+    convertPreSave(){
+        return this.obj
     }
 }

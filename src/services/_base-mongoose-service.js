@@ -79,6 +79,7 @@ export default class _BaseMongooseService {
     /**
      * Редактирование сущности.
      * @param { Object } obj - Объект сущности.
+     * @param { Object } options - Доп. настройка для выборки (select, populate, sort)
      * @param { Function } callback - Функция обратного вызова (аргумент функции DataResultEntity)
      */
     update(obj, callback){
@@ -170,6 +171,22 @@ export default class _BaseMongooseService {
         .select(options.filter || this._options.fields)
         .populate(options.populate || this._options.populate)
         return this._returnData(query, callback)
+    }
+
+    /**
+     * Конвертирует объект согласно указанным полям.
+     * @param { Object } obj - Объект для Конвертации. 
+     */
+    convertByFields(obj, fields = this._options.fields){
+        if(fields.length > 0){
+            let result = {}
+            for(let key in fields){
+                result[key] = obj[key]
+            }
+            return result
+        }else{
+            return obj
+        }
     }
 
     /* 
